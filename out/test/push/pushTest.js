@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const RxLeanCloud_1 = require("../../src/RxLeanCloud");
+var RxLeanCloud_1 = require("../../src/RxLeanCloud");
 describe('RxAVPush', function () {
-    before(() => {
+    before(function () {
         RxLeanCloud_1.RxAVClient.init({
             appId: '6j2LjkhAnnDTeefTLFQTFJXx-gzGzoHsz',
             appKey: 'mrChsHGwIAytLHopODLpqiHo',
@@ -21,7 +21,7 @@ describe('RxAVPush', function () {
     //         done();
     //     });
     // });
-    it('RxAVPush#sendTo', done => {
+    it('RxAVPush#sendTo', function (done) {
         done();
     });
 });

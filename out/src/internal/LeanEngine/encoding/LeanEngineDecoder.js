@@ -1,15 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class LeanEngineDecoder {
-    constructor(AVDecoder, AVObjectDecoder) {
+var LeanEngineDecoder = (function () {
+    function LeanEngineDecoder(AVDecoder, AVObjectDecoder) {
         this._AVDecoder = AVDecoder;
         this._AVObjectDecoder = AVObjectDecoder;
     }
-    decodeAVObject(serverResponse) {
+    LeanEngineDecoder.prototype.decodeAVObject = function (serverResponse) {
         return this._AVObjectDecoder.decode(serverResponse, this._AVDecoder);
-    }
-    decodeDictionary(serverResponse) {
+    };
+    LeanEngineDecoder.prototype.decodeDictionary = function (serverResponse) {
         return this._AVDecoder.decode(serverResponse);
-    }
-}
+    };
+    return LeanEngineDecoder;
+}());
 exports.LeanEngineDecoder = LeanEngineDecoder;

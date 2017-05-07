@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const crypto_1 = require("crypto");
+var crypto_1 = require("crypto");
 // Returns a new random hex string of the given even size.
 function randomHexString(size) {
     if (size === 0) {
@@ -26,12 +26,12 @@ function randomString(size) {
     if (size === 0) {
         throw new Error('Zero-length randomString is useless.');
     }
-    let chars = ('ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+    var chars = ('ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
         'abcdefghijklmnopqrstuvwxyz' +
         '0123456789');
-    let objectId = '';
-    let bytes = crypto_1.randomBytes(size);
-    for (let i = 0; i < bytes.length; ++i) {
+    var objectId = '';
+    var bytes = crypto_1.randomBytes(size);
+    for (var i = 0; i < bytes.length; ++i) {
         objectId += chars[bytes.readUInt8(i) % chars.length];
     }
     return objectId;
@@ -53,11 +53,11 @@ function md5Hash(string) {
 }
 exports.md5Hash = md5Hash;
 function newMobilePhoneNumber() {
-    let prefix = ['138', '139', '188', '186', '189', '171', '170'];
-    let chars = ('0123456789');
-    let mobile = prefix[Math.floor(Math.random() * prefix.length)];
-    let bytes = crypto_1.randomBytes(8);
-    for (let i = 0; i < bytes.length; ++i) {
+    var prefix = ['138', '139', '188', '186', '189', '171', '170'];
+    var chars = ('0123456789');
+    var mobile = prefix[Math.floor(Math.random() * prefix.length)];
+    var bytes = crypto_1.randomBytes(8);
+    for (var i = 0; i < bytes.length; ++i) {
         mobile += chars[bytes.readUInt8(i) % chars.length];
     }
     return mobile;

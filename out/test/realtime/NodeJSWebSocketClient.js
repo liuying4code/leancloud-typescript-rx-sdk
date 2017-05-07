@@ -2,31 +2,35 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 //import WebSocket from 'ws';
 var WebSocket = require('ws');
-class NodeJSWebSocketClient {
-    open(url, protocols) {
+var NodeJSWebSocketClient = (function () {
+    function NodeJSWebSocketClient() {
+    }
+    NodeJSWebSocketClient.prototype.open = function (url, protocols) {
+        var _this = this;
         this.wsc = new WebSocket(url, protocols);
         this.readyState = 0;
-        this.wsc.onmessage = (event) => {
-            this.onmessage({ data: event.data, type: event.type, target: this });
+        this.wsc.onmessage = function (event) {
+            _this.onmessage({ data: event.data, type: event.type, target: _this });
         };
-        this.wsc.onclose = (event) => {
-            this.readyState = 3;
-            this.onclose({ wasClean: event.wasClean, code: event.code, reason: event.reason, target: this });
+        this.wsc.onclose = function (event) {
+            _this.readyState = 3;
+            _this.onclose({ wasClean: event.wasClean, code: event.code, reason: event.reason, target: _this });
         };
-        this.wsc.onerror = (err) => {
-            this.onerror(err);
+        this.wsc.onerror = function (err) {
+            _this.onerror(err);
         };
-        this.wsc.onopen = (event) => {
-            this.readyState = 1;
-            this.onopen({ target: this });
+        this.wsc.onopen = function (event) {
+            _this.readyState = 1;
+            _this.onopen({ target: _this });
         };
-    }
-    close(code, data) {
+    };
+    NodeJSWebSocketClient.prototype.close = function (code, data) {
         this.readyState = 2;
         this.wsc.close(code, data);
-    }
-    send(data) {
+    };
+    NodeJSWebSocketClient.prototype.send = function (data) {
         this.wsc.send(data);
-    }
-}
+    };
+    return NodeJSWebSocketClient;
+}());
 exports.NodeJSWebSocketClient = NodeJSWebSocketClient;

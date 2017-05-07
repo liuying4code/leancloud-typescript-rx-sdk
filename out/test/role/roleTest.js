@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const chai = require("chai");
-const RxLeanCloud_1 = require("../../src/RxLeanCloud");
-const random = require("../utils/random");
-describe('RxAVRole', () => {
-    before(() => {
+var chai = require("chai");
+var RxLeanCloud_1 = require("../../src/RxLeanCloud");
+var random = require("../utils/random");
+describe('RxAVRole', function () {
+    before(function () {
         RxLeanCloud_1.RxAVClient.init({
             appId: 'uay57kigwe0b6f5n0e1d4z4xhydsml3dor24bzwvzr57wdap',
             appKey: 'kfgz7jjfsk55r5a8a3y4ttd3je1ko11bkibcikonk32oozww',
@@ -13,7 +13,7 @@ describe('RxAVRole', () => {
             pluginVersion: 2
         });
     });
-    it('RxAVRole#assign', done => {
+    it('RxAVRole#assign', function (done) {
         done();
         // let admin = RxAVRole.createWithoutData('5858169eac502e00670193bc');
         // admin.assign('58522f7e1b69e6006c7e1bd5', '58520289128fe1006d981b42').subscribe(success => {
@@ -21,7 +21,7 @@ describe('RxAVRole', () => {
         //     done();
         // });
     });
-    it('RxAVRole#init', done => {
+    it('RxAVRole#init', function (done) {
         done();
         // let teamName = 'hua';
         // let admin = new RxAVRole(`${teamName}_admin`);
@@ -47,12 +47,12 @@ describe('RxAVRole', () => {
         // let roomManager = new RxAVRole(`${teamName}_roomManager`);
         // let casher = new RxAVRole(`${teamName}_casher`);
     });
-    it('RxAVRole#createWithPublicACL', done => {
-        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').flatMap(user => {
-            let randomRoleName = random.randomHexString(8);
-            let testRole = new RxLeanCloud_1.RxAVRole(randomRoleName, new RxLeanCloud_1.RxAVACL());
+    it('RxAVRole#createWithPublicACL', function (done) {
+        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').flatMap(function (user) {
+            var randomRoleName = random.randomHexString(8);
+            var testRole = new RxLeanCloud_1.RxAVRole(randomRoleName, new RxLeanCloud_1.RxAVACL());
             return testRole.save();
-        }).subscribe(s => {
+        }).subscribe(function (s) {
             chai.assert.isTrue(s);
             done();
         });

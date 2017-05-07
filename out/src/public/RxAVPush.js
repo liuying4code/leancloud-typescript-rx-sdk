@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const RxLeanCloud_1 = require("../RxLeanCloud");
+var RxLeanCloud_1 = require("../RxLeanCloud");
 /**
  * 一条推送消息
  *
  * @export
  * @class RxAVPush
  */
-class RxAVPush {
-    constructor() {
+var RxAVPush = (function () {
+    function RxAVPush() {
         this.query = new RxLeanCloud_1.RxAVQuery('_Installation');
     }
     /**
@@ -25,8 +25,8 @@ class RxAVPush {
      *
      * @memberOf RxAVPush
      */
-    static sendContent(data, filter) {
-        let push = new RxAVPush();
+    RxAVPush.sendContent = function (data, filter) {
+        var push = new RxAVPush();
         if (typeof data === 'string') {
             push.alert = data;
         }
@@ -41,7 +41,7 @@ class RxAVPush {
             push.prod = filter.prod;
         }
         return push.send();
-    }
+    };
     /**
      * 向 RxAVUser 发送推送消息
      *
@@ -53,14 +53,14 @@ class RxAVPush {
      *
      * @memberOf RxAVPush
      */
-    static sendTo(user, data, prod) {
-        let query = new RxLeanCloud_1.RxAVQuery('_Installation');
+    RxAVPush.sendTo = function (user, data, prod) {
+        var query = new RxLeanCloud_1.RxAVQuery('_Installation');
         query.relatedTo(user, RxLeanCloud_1.RxAVUser.installationKey);
         return RxAVPush.sendContent(data, {
             query: query,
             prod: prod
         });
-    }
+    };
     /**
      * 发送
      *
@@ -68,21 +68,21 @@ class RxAVPush {
      *
      * @memberOf RxAVPush
      */
-    send() {
-        let data = this.encode();
-        return RxLeanCloud_1.RxAVClient.runCommand('/push', 'POST', data, RxLeanCloud_1.RxAVUser.currentSessionToken).map(body => {
+    RxAVPush.prototype.send = function () {
+        var data = this.encode();
+        return RxLeanCloud_1.RxAVClient.runCommand('/push', 'POST', data, RxLeanCloud_1.RxAVUser.currentSessionToken).map(function (body) {
             return true;
         });
-    }
-    encode() {
+    };
+    RxAVPush.prototype.encode = function () {
         if (!this.alert && !this.data)
             throw new Error('A push must have either an Alert or Data');
         if (!this.channels && !this.query)
             throw new Error('A push must have either Channels or a Query');
-        let data = this.data ? this.data : { alert: this.alert };
+        var data = this.data ? this.data : { alert: this.alert };
         if (this.channels)
             this.query = this.query.containedIn("channels", this.channels);
-        let payload = {
+        var payload = {
             data: data,
             where: this.query.buildParameters()['where']
         };
@@ -98,6 +98,7 @@ class RxAVPush {
             payload["push_time"] = this.pushTime;
         }
         return payload;
-    }
-}
+    };
+    return RxAVPush;
+}());
 exports.RxAVPush = RxAVPush;

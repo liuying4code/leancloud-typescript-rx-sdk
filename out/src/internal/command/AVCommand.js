@@ -1,65 +1,78 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
-const HttpRequest_1 = require("../httpClient/HttpRequest");
-const RxLeanCloud_1 = require("../../RxLeanCloud");
-class AVCommand extends HttpRequest_1.HttpRequest {
-    constructor(options) {
-        super();
-        this.data = {};
+var HttpRequest_1 = require("../httpClient/HttpRequest");
+var RxLeanCloud_1 = require("../../RxLeanCloud");
+var AVCommand = (function (_super) {
+    __extends(AVCommand, _super);
+    function AVCommand(options) {
+        var _this = _super.call(this) || this;
+        _this.data = {};
         if (options != null) {
-            this.relativeUrl = options.relativeUrl;
-            let apiVersion = '1.1';
-            if (this.relativeUrl == null || typeof this.relativeUrl == 'undefined')
+            _this.relativeUrl = options.relativeUrl;
+            var apiVersion = '1.1';
+            if (_this.relativeUrl == null || typeof _this.relativeUrl == 'undefined')
                 throw new Error('command must have a relative url.');
-            let protocol = 'https://';
+            var protocol = 'https://';
             if (RxLeanCloud_1.RxAVClient.instance.currentConfiguration.region == 'cn') {
-                this.url = `${RxLeanCloud_1.RxAVClient.instance.appRouterState.ApiServer}/${apiVersion}${this.relativeUrl}`;
+                _this.url = RxLeanCloud_1.RxAVClient.instance.appRouterState.ApiServer + "/" + apiVersion + _this.relativeUrl;
                 if (RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.api != null) {
-                    this.url = `${RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.api}/${apiVersion}${this.relativeUrl}`;
+                    _this.url = RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.api + "/" + apiVersion + _this.relativeUrl;
                 }
-                if (this.relativeUrl.startsWith('/push') || this.relativeUrl.startsWith('/installations')) {
-                    this.url = `${RxLeanCloud_1.RxAVClient.instance.appRouterState.PushServer}/${apiVersion}${this.relativeUrl}`;
+                if (_this.relativeUrl.startsWith('/push') || _this.relativeUrl.startsWith('/installations')) {
+                    _this.url = RxLeanCloud_1.RxAVClient.instance.appRouterState.PushServer + "/" + apiVersion + _this.relativeUrl;
                     if (RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.push != null) {
-                        this.url = `${RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.push}/${apiVersion}${this.relativeUrl}`;
+                        _this.url = RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.push + "/" + apiVersion + _this.relativeUrl;
                     }
                 }
-                else if (this.relativeUrl.startsWith('/stats')
-                    || this.relativeUrl.startsWith('/always_collect')
-                    || this.relativeUrl.startsWith('/statistics')) {
-                    this.url = `${RxLeanCloud_1.RxAVClient.instance.appRouterState.StatsServer}/${apiVersion}${this.relativeUrl}`;
+                else if (_this.relativeUrl.startsWith('/stats')
+                    || _this.relativeUrl.startsWith('/always_collect')
+                    || _this.relativeUrl.startsWith('/statistics')) {
+                    _this.url = RxLeanCloud_1.RxAVClient.instance.appRouterState.StatsServer + "/" + apiVersion + _this.relativeUrl;
                     if (RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.stats != null) {
-                        this.url = `${RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.stats}/${apiVersion}${this.relativeUrl}`;
+                        _this.url = RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.stats + "/" + apiVersion + _this.relativeUrl;
                     }
                 }
-                else if (this.relativeUrl.startsWith('/functions')
-                    || this.relativeUrl.startsWith('/call')) {
-                    this.url = `${RxLeanCloud_1.RxAVClient.instance.appRouterState.EngineServer}/${apiVersion}${this.relativeUrl}`;
+                else if (_this.relativeUrl.startsWith('/functions')
+                    || _this.relativeUrl.startsWith('/call')) {
+                    _this.url = RxLeanCloud_1.RxAVClient.instance.appRouterState.EngineServer + "/" + apiVersion + _this.relativeUrl;
                     if (RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.engine != null) {
-                        this.url = `${RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.engine}/${apiVersion}${this.relativeUrl}`;
+                        _this.url = RxLeanCloud_1.RxAVClient.instance.currentConfiguration.server.engine + "/" + apiVersion + _this.relativeUrl;
                     }
                 }
             }
-            this.method = options.method;
-            this.data = options.data;
-            this.headers = RxLeanCloud_1.RxAVClient.headers();
+            _this.method = options.method;
+            _this.data = options.data;
+            _this.headers = RxLeanCloud_1.RxAVClient.headers();
             if (options.headers != null) {
-                for (let key in options.headers) {
-                    this.headers[key] = options.headers[key];
+                for (var key in options.headers) {
+                    _this.headers[key] = options.headers[key];
                 }
             }
             if (options.sessionToken != null) {
-                this.sessionToken = options.sessionToken;
-                this.headers['X-LC-Session'] = options.sessionToken;
+                _this.sessionToken = options.sessionToken;
+                _this.headers['X-LC-Session'] = options.sessionToken;
             }
             if (options.contentType != null) {
-                this.contentType = options.contentType;
-                this.headers['Content-Type'] = options.contentType;
+                _this.contentType = options.contentType;
+                _this.headers['Content-Type'] = options.contentType;
             }
         }
+        return _this;
     }
-    attribute(key, value) {
+    AVCommand.prototype.attribute = function (key, value) {
         this.data[key] = value;
         return this;
-    }
-}
+    };
+    return AVCommand;
+}(HttpRequest_1.HttpRequest));
 exports.AVCommand = AVCommand;

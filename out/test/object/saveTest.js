@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const chai = require("chai");
-const RxLeanCloud_1 = require("../../src/RxLeanCloud");
+var chai = require("chai");
+var RxLeanCloud_1 = require("../../src/RxLeanCloud");
 describe('RxObject', function () {
-    before(() => {
+    before(function () {
         RxLeanCloud_1.RxAVClient.init({
             appId: 'uay57kigwe0b6f5n0e1d4z4xhydsml3dor24bzwvzr57wdap',
             appKey: 'kfgz7jjfsk55r5a8a3y4ttd3je1ko11bkibcikonk32oozww',
@@ -13,15 +13,15 @@ describe('RxObject', function () {
         });
     });
     it('RxAVObject#saveBase', function (done) {
-        let todo = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo.set('title', '开会');
         todo.set('time', '2016-12-03');
         todo.set('reminder', new Date());
         todo.set('open', false);
-        todo.save().subscribe(() => {
+        todo.save().subscribe(function () {
             console.log('todo.title', todo.get('title'));
             done();
-        }, error => {
+        }, function (error) {
             /** error 的格式如下：
              * {statusCode: -1,error: { code: 0, error: 'Server error' }}
              * statusCode:是本次 http 请求的应答的响应码，LeanCloud 云端会返回标准的 Http Status，一般错误可以从这里查找原因
@@ -34,58 +34,58 @@ describe('RxObject', function () {
             }
         });
     });
-    it('RxAVObject#saveAll', done => {
-        let todo1 = new RxLeanCloud_1.RxAVObject('RxTodo');
+    it('RxAVObject#saveAll', function (done) {
+        var todo1 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo1.set('title', '开会');
         todo1.set('time', '2016-12-03');
         todo1.set('reminder', new Date());
-        let todo2 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo2 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo2.set('title', '开会');
         todo2.set('time', '2016-12-03');
         todo2.set('reminder', new Date());
-        let todo3 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo3 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo3.set('title', '开会');
         todo3.set('time', '2016-12-03');
         todo3.set('reminder', new Date());
-        let todo4 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo4 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo4.set('title', '开会');
         todo4.set('time', '2016-12-03');
         todo4.set('reminder', new Date());
-        let obja = [todo1, todo2, todo3, todo4];
-        RxLeanCloud_1.RxAVObject.saveAll(obja).subscribe(next => {
+        var obja = [todo1, todo2, todo3, todo4];
+        RxLeanCloud_1.RxAVObject.saveAll(obja).subscribe(function (next) {
             console.log('1');
-        }, error => {
+        }, function (error) {
             console.log(error);
-        }, () => {
+        }, function () {
             done();
             console.log('all have been saved.');
         });
     });
-    it('RxAVObject#savePointer', done => {
-        let todo1 = new RxLeanCloud_1.RxAVObject('RxTodo');
+    it('RxAVObject#savePointer', function (done) {
+        var todo1 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo1.set('title', 'father');
         todo1.set('time', '2016-12-07');
         todo1.set('likes', 9);
-        let todo2 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo2 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo2.set('title', 'son');
         todo1.set('xx', todo2);
-        let todo3 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo3 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo3.set('title', 'grandson');
         todo1.set('yy', todo3);
-        todo1.save().subscribe(s => {
+        todo1.save().subscribe(function (s) {
             console.log(todo1.objectId);
             console.log(todo2.objectId);
             done();
-        }, error => {
+        }, function (error) {
             console.log(error);
         });
     });
-    it('RxAVObject#saveUnderACL', done => {
-        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').subscribe(user => {
-            let team = new RxLeanCloud_1.RxAVObject('teams');
-            let teamPrefix = 'hua';
-            let admin = `${teamPrefix}_admin`;
-            let acl = new RxLeanCloud_1.RxAVACL();
+    it('RxAVObject#saveUnderACL', function (done) {
+        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').subscribe(function (user) {
+            var team = new RxLeanCloud_1.RxAVObject('teams');
+            var teamPrefix = 'hua';
+            var admin = teamPrefix + "_admin";
+            var acl = new RxLeanCloud_1.RxAVACL();
             acl.setRoleWriteAccess(admin, true);
             acl.setReadAccess(admin, true);
             acl.setPublicWriteAccess(false);
@@ -93,21 +93,21 @@ describe('RxObject', function () {
             team.set('name', teamPrefix);
             team.set('domain', teamPrefix);
             team.set('owner', RxLeanCloud_1.RxAVUser.currentUser);
-            team.save().subscribe(() => {
+            team.save().subscribe(function () {
                 done();
             });
         });
     });
-    it('RxAVObject#collectChildrenTwoHierarchies', done => {
-        let todo = new RxLeanCloud_1.RxAVObject('RxTodo');
+    it('RxAVObject#collectChildrenTwoHierarchies', function (done) {
+        var todo = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo.set('title', 'todo');
-        let todo2 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo2 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo2.set('title', 'todo2');
-        let todo3 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo3 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo3.set('title', 'todo3');
-        let todo4 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo4 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo4.set('title', 'todo4');
-        let todo5 = new RxLeanCloud_1.RxAVObject('RxTodo');
+        var todo5 = new RxLeanCloud_1.RxAVObject('RxTodo');
         todo5.set('title', 'todo5');
         todo4.set('t', todo5);
         //todo5.set('t', todo4);
@@ -124,21 +124,21 @@ describe('RxObject', function () {
         // console.log('s', s);
         // console.log('t', t);
         // done();
-        todo.save().subscribe(s => {
+        todo.save().subscribe(function (s) {
             console.log(s);
             done();
         });
     });
-    it('RxAVObject#saveDate', done => {
-        let testTodo = new RxLeanCloud_1.RxAVObject('Todo');
+    it('RxAVObject#saveDate', function (done) {
+        var testTodo = new RxLeanCloud_1.RxAVObject('Todo');
         testTodo.set('rDate', new Date());
-        testTodo.save().flatMap(s => {
-            let query = new RxLeanCloud_1.RxAVQuery('Todo');
+        testTodo.save().flatMap(function (s) {
+            var query = new RxLeanCloud_1.RxAVQuery('Todo');
             query.equalTo('objectId', testTodo.objectId);
             return query.find();
-        }).map(todos => {
-            let updatedAt = todos[0].updatedAt;
-            let testDate = todos[0].get('rDate');
+        }).map(function (todos) {
+            var updatedAt = todos[0].updatedAt;
+            var testDate = todos[0].get('rDate');
             console.log('testDate', testDate);
             console.log(typeof testDate);
             console.log('ed', todos[0].estimatedData);
@@ -146,9 +146,9 @@ describe('RxObject', function () {
             //chai.assert.isTrue(updatedAt instanceof Date);
             //chai.assert.isTrue(testTodo.updatedAt instanceof Date);
             return todos[0];
-        }).flatMap(s1 => {
+        }).flatMap(function (s1) {
             return s1.save();
-        }).subscribe(s2 => {
+        }).subscribe(function (s2) {
             chai.assert.isTrue(s2);
             done();
         });

@@ -1,14 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const RxLeanCloud_1 = require("../../RxLeanCloud");
-class AVDecoder {
-    decode(data) {
-        let mutableData = data;
-        let result = {};
-        for (let key in mutableData) {
-            result[key] = this.extractFromDictionary(mutableData, key, (v) => {
+var RxLeanCloud_1 = require("../../RxLeanCloud");
+var AVDecoder = (function () {
+    function AVDecoder() {
+    }
+    AVDecoder.prototype.decode = function (data) {
+        var _this = this;
+        var mutableData = data;
+        var result = {};
+        for (var key in mutableData) {
+            result[key] = this.extractFromDictionary(mutableData, key, function (v) {
                 if (Object.prototype.hasOwnProperty.call(v, '__type') || Object.prototype.hasOwnProperty.call(v, 'className')) {
-                    return this.decodeItem(v);
+                    return _this.decodeItem(v);
                 }
                 else {
                     return v;
@@ -16,24 +19,24 @@ class AVDecoder {
             });
         }
         return result;
-    }
-    decodeItem(data) {
+    };
+    AVDecoder.prototype.decodeItem = function (data) {
         if (data == null) {
             return null;
         }
-        let dict = data;
+        var dict = data;
         if (!Object.prototype.hasOwnProperty.call(dict, '__type')) {
-            let newDict = {};
-            for (let key in dict) {
-                let value = dict[key];
+            var newDict = {};
+            for (var key in dict) {
+                var value = dict[key];
                 newDict[key] = this.decodeItem(value);
             }
             return newDict;
         }
         else {
-            let typeString = dict['__type'];
+            var typeString = dict['__type'];
             if (typeString == 'Date') {
-                let dt = new Date(dict["iso"]);
+                var dt = new Date(dict["iso"]);
                 return dt;
             }
             else if (typeString == 'Pointer') {
@@ -41,24 +44,25 @@ class AVDecoder {
             }
         }
         return data;
-    }
-    decodePointer(className, objectId) {
+    };
+    AVDecoder.prototype.decodePointer = function (className, objectId) {
         return RxLeanCloud_1.RxAVObject.createWithoutData(className, objectId);
-    }
-    extractFromDictionary(data, key, convertor) {
+    };
+    AVDecoder.prototype.extractFromDictionary = function (data, key, convertor) {
         if (Object.prototype.hasOwnProperty.call(data, key)) {
-            let v = data[key];
-            let result = convertor(v);
+            var v = data[key];
+            var result = convertor(v);
             return v;
         }
         return null;
-    }
-    isValidType(value) {
+    };
+    AVDecoder.prototype.isValidType = function (value) {
         return value == null ||
             value instanceof String ||
             value instanceof RxLeanCloud_1.RxAVObject ||
             value instanceof RxLeanCloud_1.RxAVACL ||
             value instanceof Date;
-    }
-}
+    };
+    return AVDecoder;
+}());
 exports.AVDecoder = AVDecoder;

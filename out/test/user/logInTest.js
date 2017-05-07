@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const chai = require("chai");
-const RxLeanCloud_1 = require("../../src/RxLeanCloud");
+var chai = require("chai");
+var RxLeanCloud_1 = require("../../src/RxLeanCloud");
 describe('RxAVUser', function () {
-    before(() => {
+    before(function () {
         RxLeanCloud_1.RxAVClient.init({
             appId: 'uay57kigwe0b6f5n0e1d4z4xhydsml3dor24bzwvzr57wdap',
             appKey: 'kfgz7jjfsk55r5a8a3y4ttd3je1ko11bkibcikonk32oozww',
@@ -13,16 +13,16 @@ describe('RxAVUser', function () {
         });
     });
     it('RxAVUser#logIn', function (done) {
-        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').subscribe(user => {
+        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').subscribe(function (user) {
             console.log(user.username);
             console.log(user.state);
             chai.assert.isNotNull(user.username);
-            user.isAuthenticated().subscribe(s => {
+            user.isAuthenticated().subscribe(function (s) {
                 console.log('user.isAuthenticated()', s);
                 chai.assert.isTrue(s);
                 done();
             });
-        }, error => {
+        }, function (error) {
             /** error 的格式如下：
              * {statusCode: -1,error: { code: 0, error: 'Server error' }}
              * statusCode:是本次 http 请求的应答的响应码，LeanCloud 云端会返回标准的 Http Status，一般错误可以从这里查找原因
@@ -38,23 +38,23 @@ describe('RxAVUser', function () {
         });
     });
     it('RxAVUser#logIn->currentUser', function (done) {
-        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').flatMap(user => {
+        RxLeanCloud_1.RxAVUser.logIn('junwu', 'leancloud').flatMap(function (user) {
             console.log(user.username);
             console.log(user.state);
             chai.assert.isNotNull(user.username);
-            return user.isAuthenticated().flatMap(s => {
+            return user.isAuthenticated().flatMap(function (s) {
                 user.set('title', 'xman');
                 return user.save();
             });
-        }).subscribe(s1 => {
+        }).subscribe(function (s1) {
             done();
         });
     });
-    it('RxAVUser#logInWithMobilephone', done => {
-        RxLeanCloud_1.RxAVUser.logInWithMobilephone('18612438929', 'leancloud').subscribe(user => {
+    it('RxAVUser#logInWithMobilephone', function (done) {
+        RxLeanCloud_1.RxAVUser.logInWithMobilephone('18612438929', 'leancloud').subscribe(function (user) {
             chai.assert.isNotNull(user);
             done();
-        }, error => {
+        }, function (error) {
             chai.assert.isNull(error);
             done();
         });

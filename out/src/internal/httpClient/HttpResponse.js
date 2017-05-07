@@ -1,14 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class HttpResponse {
-    constructor(option) {
+var HttpResponse = (function () {
+    function HttpResponse(option) {
         if (option != null) {
             this.satusCode = option[0];
             this.body = option[1];
         }
     }
-    get jsonBody() {
-        return JSON.parse(this.body);
-    }
-}
+    Object.defineProperty(HttpResponse.prototype, "jsonBody", {
+        get: function () {
+            return JSON.parse(this.body);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return HttpResponse;
+}());
 exports.HttpResponse = HttpResponse;
